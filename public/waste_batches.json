@@ -7,7 +7,7 @@
     "quantity_kg": 120,
     "moisture_percentage": 20,
     "quality_grade": null,
-    "status": "available",
+    "status": "booked",
     "image_url": "https://media.istockphoto.com/id/1206200429/photo/straw-in-the-rice-fields-closeup-of-photo.jpg?s=612x612&w=0&k=20&c=iQcIKig5BidT1fdboHOY7pPuB3W82EpOAElad8srJe4=",
     "created_at": "2026-01-30T13:00:00Z"
   },
@@ -19,9 +19,10 @@
     "quantity_kg": 200,
     "moisture_percentage": 22,
     "quality_grade": null,
-    "status": "available",
+    "status": "verified",
     "image_url": "https://img.whatpackaging.co.in/whatpackaging/2e62eef9-dca0-42eb-8f74-1c3c2d628eef_banana%20waste.png?w=800&h=500&q=70&c=1",
-    "created_at": "2026-01-30T13:05:00Z"
+    "created_at": "2026-01-30T13:05:00Z",
+    "verified_at": "2026-01-30T11:17:27.539Z"
   },
   {
     "id": "10000000-0000-0000-0000-000000000003",
@@ -43,9 +44,10 @@
     "quantity_kg": 150,
     "moisture_percentage": 25,
     "quality_grade": null,
-    "status": "verified",
+    "status": "delivered",
     "image_url": "https://www.shutterstock.com/image-photo/pile-rice-straw-after-harvested-600nw-2266233717.jpg",
     "created_at": "2026-01-30T13:15:00Z",
-    "verified_at": "2026-01-30T10:31:51.204Z"
+    "verified_at": "2026-01-30T10:31:51.204Z",
+    "delivered_at": "2026-01-30T11:15:32.469Z"
   }
 ]

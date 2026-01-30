@@ -34,12 +34,6 @@ export default function HubNavbar() {
                 </Button>
 
 
-                <Button
-                    variant="outline"
-                    onClick={() => router.push("/hub-operator/delivered")}
-                >
-                    Delivered Listings
-                </Button>
 
 
                 <Button variant="destructive" onClick={logout}>
