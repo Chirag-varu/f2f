@@ -24,21 +24,35 @@ export default function IndustryDashboardPage() {
   const [materials, setMaterials] = useState<any[]>([]);
   const [users, setUsers] = useState<any[]>([]);
 
-  // Fetch waste batches directly from JSON file
+  // Fetch waste batches from localStorage or JSON file
   const fetchWasteBatches = () => {
-    fetch('/waste_batches.json')
-      .then(async (res) => {
-        if (!res.ok) return [];
-        const text = await res.text();
-        if (!text) return [];
-        try {
-          return JSON.parse(text);
-        } catch {
-          return [];
-        }
-      })
-      .then((data) => setWasteBatches(data));
+    const local = localStorage.getItem('wasteBatches');
+    if (local) {
+      setWasteBatches(JSON.parse(local));
+    } else {
+      fetch('/waste_batches.json')
+        .then(async (res) => {
+          if (!res.ok) return [];
+          const text = await res.text();
+          if (!text) return [];
+          try {
+            const data = JSON.parse(text);
+            setWasteBatches(data);
+            localStorage.setItem('wasteBatches', JSON.stringify(data));
+            return data;
+          } catch {
+            return [];
+          }
+        });
+    }
   };
+
+  // Update localStorage when wasteBatches changes
+  useEffect(() => {
+    if (wasteBatches.length > 0) {
+      localStorage.setItem('wasteBatches', JSON.stringify(wasteBatches));
+    }
+  }, [wasteBatches]);
 
   // Fetch materials
   useEffect(() => {
