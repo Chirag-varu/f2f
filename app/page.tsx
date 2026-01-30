@@ -32,9 +32,9 @@ export default function LandingPage() {
       {/* ================= HERO ================= */}
       <section className="mx-auto flex max-w-7xl flex-col items-center px-6 py-20 text-center">
         <h1 className="max-w-4xl text-4xl font-bold leading-tight text-krishi-darkbrown md:text-6xl">
-          Turn Agricultural Waste
+          Waste to Value
           <span className="block text-krishi-olive">
-            Into Sustainable Industrial Value
+            For a Circular Economy
           </span>
         </h1>
 
@@ -64,7 +64,7 @@ export default function LandingPage() {
       {/* ================= HOW IT WORKS ================= */}
       <section id="how-it-works" className="mx-auto max-w-7xl px-6 py-16">
         <h2 className="text-center text-3xl font-semibold text-krishi-darkbrown">
-          How Krishi Loop Works
+          How Farm 2 Fuel Works
         </h2>
 
         <div className="mt-12 grid gap-8 md:grid-cols-3">
@@ -103,7 +103,7 @@ export default function LandingPage() {
       {/* ================= BENEFITS ================= */}
       <section id="benefits" className="mx-auto max-w-7xl px-6 py-16">
         <h2 className="text-center text-3xl font-semibold text-krishi-darkbrown">
-          Why Choose Krishi Loop
+          Why Choose Farm 2 Fuel
         </h2>
 
         <div className="mt-12 grid gap-8 md:grid-cols-2">
@@ -134,7 +134,7 @@ export default function LandingPage() {
       {/* ================= FOOTER ================= */}
       <footer className="border-t bg-krishi-beige px-6 py-8">
         <div className="mx-auto max-w-7xl text-center text-sm text-muted-foreground">
-          © 2026 Krishi Loop. Building a sustainable rural future.
+          © 2026 Farm 2 Fuel. Building a sustainable rural future.
         </div>
       </footer>
     </main>
