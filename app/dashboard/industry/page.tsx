@@ -101,9 +101,6 @@ const NavItem = ({ name, icon }: NavItemProps) => {
         <nav className="flex-1 px-4 space-y-2">
           <NavItem name="Overview" icon="📊" />
           <NavItem name="Marketplace" icon="🛒" />
-          <NavItem name="Inventory" icon="📦" />
-          <NavItem name="Logistics" icon="🚚" />
-          <NavItem name="Analytics" icon="📈" />
         </nav>
         <div className="p-6 border-t border-slate-800">
           <div className="bg-slate-800/50 p-4 rounded-2xl flex items-center gap-3 border border-slate-700">
@@ -217,7 +214,6 @@ const NavItem = ({ name, icon }: NavItemProps) => {
                           location: farmerDistrict,
                           status: batch.status === 'Booked' ? 'Booked' : 'Available',
                           image_url: batch.image_url,
-                          farmer_name: farmerName,
                         }}
                         onBook={handleBook}
                       />
