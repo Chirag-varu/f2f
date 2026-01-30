@@ -1,0 +1,1 @@
+// Auth utility functions (placeholder)

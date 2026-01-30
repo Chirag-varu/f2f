@@ -1,0 +1,79 @@
+{
+  "Rice": {
+    "unit": "kg",
+    "pricing": {
+      "moisture_0_50": {
+        "price_per_kg": 4.5
+      },
+      "moisture_above_50": {
+        "price_per_kg": 2.5
+      }
+    }
+  },
+  "Sugarcane": {
+    "unit": "kg",
+    "pricing": {
+      "moisture_0_50": {
+        "price_per_kg": 3.5
+      },
+      "moisture_above_50": {
+        "price_per_kg": 2.0
+      }
+    }
+  },
+  "Corn": {
+    "unit": "kg",
+    "pricing": {
+      "moisture_0_50": {
+        "price_per_kg": 4.0
+      },
+      "moisture_above_50": {
+        "price_per_kg": 2.2
+      }
+    }
+  },
+  "Cotton": {
+    "unit": "kg",
+    "pricing": {
+      "moisture_0_50": {
+        "price_per_kg": 5.0
+      },
+      "moisture_above_50": {
+        "price_per_kg": 3.0
+      }
+    }
+  },
+  "Potato": {
+    "unit": "kg",
+    "pricing": {
+      "moisture_0_50": {
+        "price_per_kg": 2.0
+      },
+      "moisture_above_50": {
+        "price_per_kg": 1.2
+      }
+    }
+  },
+  "Banana": {
+    "unit": "kg",
+    "pricing": {
+      "moisture_0_50": {
+        "price_per_kg": 2.8
+      },
+      "moisture_above_50": {
+        "price_per_kg": 1.5
+      }
+    }
+  },
+  "Bamboo": {
+    "unit": "kg",
+    "pricing": {
+      "moisture_0_50": {
+        "price_per_kg": 6.0
+      },
+      "moisture_above_50": {
+        "price_per_kg": 4.0
+      }
+    }
+  }
+}
