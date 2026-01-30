@@ -2,13 +2,14 @@
 import { Card } from "./ui/card";
 
 interface Listing {
-  id: number;
+  id: string;
   crop_type: string;
   waste_type: string;
   quantity: string;
   availability_date: string;
   location: string;
   status: string;
+  price?: string | null;
 }
 
 interface MarketplaceCardProps {
@@ -25,6 +26,9 @@ export default function MarketplaceCard({ listing }: MarketplaceCardProps) {
         <div className="text-green-700 mb-1">Quantity: {listing.quantity} kg</div>
         <div className="text-green-700 mb-1">Available: {listing.availability_date}</div>
         <div className="text-green-700">Location: {listing.location}</div>
+        {listing.price && (
+          <div className="text-green-900 font-bold mt-2">Price: ₹{listing.price}</div>
+        )}
       </div>
       <div className="mt-4 md:mt-0 flex flex-col items-end">
         <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm mb-2">{listing.status}</span>

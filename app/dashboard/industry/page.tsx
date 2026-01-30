@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import MarketplaceCard from "@/components/MarketplaceCard";
 
 // --- TYPES & INTERFACES ---
@@ -18,32 +18,52 @@ interface Shipment {
   color: string;
 }
 
-export default function IndustryDashboard() {
+export default function IndustryDashboardPage() {
   const [activeTab, setActiveTab] = useState<string>('overview');
+  const [wasteBatches, setWasteBatches] = useState<any[]>([]);
+  const [materials, setMaterials] = useState<any[]>([]);
 
-  // Type-safe Mock Data
-  const shipments: Shipment[] = [
-    { id: 'SH-7821', supplier: 'Amritsar Bio-Hub', material: 'Wheat Straw', weight: '12 Tons', status: 'In Transit', color: 'text-blue-600 bg-blue-50' },
-    { id: 'SH-7825', supplier: 'Gujarat Cotton Co', material: 'Cotton Stalk', weight: '8 Tons', status: 'Dispatched', color: 'text-amber-600 bg-amber-50' },
-    { id: 'SH-7790', supplier: 'Pune Sugar Mills', material: 'Bagasse', weight: '24 Tons', status: 'Delivered', color: 'text-emerald-600 bg-emerald-50' },
-  ];
+  // Fetch waste batches
+  useEffect(() => {
+    if (activeTab === 'marketplace') {
+      fetch('/waste_batches.json')
+        .then((res) => res.json())
+        .then((data) => setWasteBatches(data));
+    }
+  }, [activeTab]);
 
-  // Type-safe Sub-component
-  const NavItem = ({ name, icon }: NavItemProps) => {
-    const isActive = activeTab === name.toLowerCase();
-    return (
-      <button
-        onClick={() => setActiveTab(name.toLowerCase())}
-        className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl transition-all duration-200 ${isActive
-          ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/20'
-          : 'text-slate-400 hover:bg-slate-800 hover:text-white'
-          }`}
-      >
-        <span className="text-xl">{icon}</span>
-        <span className="font-bold text-sm tracking-wide">{name}</span>
-      </button>
-    );
-  };
+  // Fetch materials
+  useEffect(() => {
+    if (activeTab === 'marketplace') {
+      fetch('/materials.json')
+        .then((res) => res.json())
+        .then((data) => setMaterials(data));
+    }
+  }, [activeTab]);
+
+// Type-safe Mock Data
+const shipments: Shipment[] = [
+  { id: 'SH-7821', supplier: 'Amritsar Bio-Hub', material: 'Wheat Straw', weight: '12 Tons', status: 'In Transit', color: 'text-blue-600 bg-blue-50' },
+  { id: 'SH-7825', supplier: 'Gujarat Cotton Co', material: 'Cotton Stalk', weight: '8 Tons', status: 'Dispatched', color: 'text-amber-600 bg-amber-50' },
+  { id: 'SH-7790', supplier: 'Pune Sugar Mills', material: 'Bagasse', weight: '24 Tons', status: 'Delivered', color: 'text-emerald-600 bg-emerald-50' },
+];
+
+// Type-safe Sub-component
+const NavItem = ({ name, icon }: NavItemProps) => {
+  const isActive = activeTab === name.toLowerCase();
+  return (
+    <button
+      onClick={() => setActiveTab(name.toLowerCase())}
+      className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl transition-all duration-200 ${isActive
+        ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/20'
+        : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+        }`}
+    >
+      <span className="text-xl">{icon}</span>
+      <span className="font-bold text-sm tracking-wide">{name}</span>
+    </button>
+  );
+};
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] flex font-sans text-slate-900">
@@ -150,17 +170,28 @@ export default function IndustryDashboard() {
             <div>
               <h1 className="text-3xl font-bold mb-6 text-green-800">Marketplace</h1>
               <div>
-                {[{
-                  id: 1,
-                  crop_type: "Wheat",
-                  waste_type: "Straw",
-                  quantity: "1000",
-                  availability_date: "2026-02-10",
-                  location: "Delhi",
-                  status: "Available",
-                }].map((listing) => (
-                  <MarketplaceCard key={listing.id} listing={listing} />
-                ))}
+                {wasteBatches.length === 0 ? (
+                  <div className="text-gray-500">No waste batches available.</div>
+                ) : (
+                  wasteBatches.map((batch) => {
+                    const material = materials.find((m) => m.id === batch.material_type);
+                    const materialName = material ? material.name : batch.material_type;
+                    return (
+                      <MarketplaceCard
+                        key={batch.id}
+                        listing={{
+                          id: batch.id,
+                          crop_type: materialName,
+                          waste_type: materialName,
+                          quantity: batch.quantity_kg.toString(),
+                          availability_date: batch.created_at.split('T')[0],
+                          location: batch.location || 'Unknown',
+                          status: batch.status.charAt(0).toUpperCase() + batch.status.slice(1),
+                        }}
+                      />
+                    );
+                  })
+                )}
               </div>
             </div>
           )}
