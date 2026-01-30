@@ -1,0 +1,50 @@
+[
+  {
+    "id": "10000000-0000-0000-0000-000000000001",
+    "farmer_id": "53d67492-f823-4d9a-9ef3-a93339d51939",
+    "hub_id": null,
+    "material_type": "634372b0-d502-4d67-8373-842c0b8ca14a",
+    "quantity_kg": 120,
+    "moisture_percentage": 20,
+    "quality_grade": null,
+    "status": "available",
+    "image_url": "https://picsum.photos/seed/rice/600/400",
+    "created_at": "2026-01-30T13:00:00Z"
+  },
+  {
+    "id": "10000000-0000-0000-0000-000000000002",
+    "farmer_id": "b1b6c4d0-6b4b-4f0d-b3bb-2c9d88c4c101",
+    "hub_id": null,
+    "material_type": "112d7127-f0c1-4c25-85b2-07b76e1a6318",
+    "quantity_kg": 200,
+    "moisture_percentage": 22,
+    "quality_grade": null,
+    "status": "available",
+    "image_url": "https://picsum.photos/seed/sugarcane/600/400",
+    "created_at": "2026-01-30T13:05:00Z"
+  },
+  {
+    "id": "10000000-0000-0000-0000-000000000003",
+    "farmer_id": "a92c1d7c-8e8d-4c7c-9b61-5fd4b8d8f201",
+    "hub_id": null,
+    "material_type": "4415bee5-f275-4cce-abe6-7bcbccd98ea7",
+    "quantity_kg": 90,
+    "moisture_percentage": 18,
+    "quality_grade": null,
+    "status": "available",
+    "image_url": "https://picsum.photos/seed/cotton/600/400",
+    "created_at": "2026-01-30T13:10:00Z"
+  },
+  {
+    "id": "10000000-0000-0000-0000-000000000004",
+    "farmer_id": "c3d42f62-3d2a-4f7a-9bb3-3a9fd0c6a301",
+    "hub_id": null,
+    "material_type": "59b39f84-6209-48e3-937f-e40af2c0f4dd",
+    "quantity_kg": 150,
+    "moisture_percentage": 25,
+    "quality_grade": null,
+    "status": "available",
+    "image_url": "https://picsum.photos/seed/banana/600/400",
+    "created_at": "2026-01-30T13:15:00Z"
+  }
+]
