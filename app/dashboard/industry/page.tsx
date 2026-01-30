@@ -22,20 +22,23 @@ export default function IndustryDashboardPage() {
   const [activeTab, setActiveTab] = useState<string>('overview');
   const [wasteBatches, setWasteBatches] = useState<any[]>([]);
   const [materials, setMaterials] = useState<any[]>([]);
+  const [users, setUsers] = useState<any[]>([]);
 
-  // Fetch waste batches
-  // Fetch waste batches from backend API
+  // Fetch waste batches directly from JSON file
   const fetchWasteBatches = () => {
-    fetch('/api/waste-batches')
-      .then((res) => res.json())
+    fetch('/waste_batches.json')
+      .then(async (res) => {
+        if (!res.ok) return [];
+        const text = await res.text();
+        if (!text) return [];
+        try {
+          return JSON.parse(text);
+        } catch {
+          return [];
+        }
+      })
       .then((data) => setWasteBatches(data));
   };
-
-  useEffect(() => {
-    if (activeTab === 'marketplace') {
-      fetchWasteBatches();
-    }
-  }, [activeTab]);
 
   // Fetch materials
   useEffect(() => {
@@ -43,6 +46,21 @@ export default function IndustryDashboardPage() {
       fetch('/materials.json')
         .then((res) => res.json())
         .then((data) => setMaterials(data));
+    }
+  }, [activeTab]);
+
+  // Fetch users
+  useEffect(() => {
+    if (activeTab === 'marketplace') {
+      fetch('/users.json')
+        .then((res) => res.json())
+        .then((data) => setUsers(data));
+    }
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (activeTab === 'marketplace') {
+      fetchWasteBatches();
     }
   }, [activeTab]);
 
@@ -72,7 +90,6 @@ const NavItem = ({ name, icon }: NavItemProps) => {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] flex font-sans text-slate-900">
-      
       {/* --- SIDEBAR --- */}
       <aside className="w-72 bg-[#0F172A] text-white flex flex-col sticky top-0 h-screen hidden lg:flex">
         <div className="p-8 mb-4">
@@ -81,7 +98,6 @@ const NavItem = ({ name, icon }: NavItemProps) => {
             <span className="text-xl font-black tracking-tighter uppercase">Farmer 2 Fuel</span>
           </div>
         </div>
-
         <nav className="flex-1 px-4 space-y-2">
           <NavItem name="Overview" icon="📊" />
           <NavItem name="Marketplace" icon="🛒" />
@@ -89,7 +105,6 @@ const NavItem = ({ name, icon }: NavItemProps) => {
           <NavItem name="Logistics" icon="🚚" />
           <NavItem name="Analytics" icon="📈" />
         </nav>
-
         <div className="p-6 border-t border-slate-800">
           <div className="bg-slate-800/50 p-4 rounded-2xl flex items-center gap-3 border border-slate-700">
             <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-700 font-bold">I</div>
@@ -100,7 +115,6 @@ const NavItem = ({ name, icon }: NavItemProps) => {
           </div>
         </div>
       </aside>
-
       {/* --- MAIN CONTENT --- */}
       <main className="flex-1 flex flex-col max-h-screen overflow-y-auto">
         <div className="p-10 space-y-8">
@@ -185,13 +199,11 @@ const NavItem = ({ name, icon }: NavItemProps) => {
                   wasteBatches.map((batch) => {
                     const material = materials.find((m) => m.id === batch.material_type);
                     const materialName = material ? material.name : batch.material_type;
+                    const user = users.find((u) => u.id === batch.farmer_id);
+                    const farmerName = user ? user.full_name : batch.farmer_id;
+                    const farmerDistrict = user ? user.district : 'Unknown';
                     const handleBook = async () => {
-                      await fetch('/api/waste-batches', {
-                        method: 'PUT',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ id: batch.id, status: 'Booked' }),
-                      });
-                      fetchWasteBatches();
+                      setWasteBatches((prev) => prev.map((b) => b.id === batch.id ? { ...b, status: 'Booked' } : b));
                     };
                     return (
                       <MarketplaceCard
@@ -202,9 +214,10 @@ const NavItem = ({ name, icon }: NavItemProps) => {
                           waste_type: materialName,
                           quantity: batch.quantity_kg.toString(),
                           availability_date: batch.created_at.split('T')[0],
-                          location: batch.location || 'Maharashtra',
+                          location: farmerDistrict,
                           status: batch.status === 'Booked' ? 'Booked' : 'Available',
                           image_url: batch.image_url,
+                          farmer_name: farmerName,
                         }}
                         onBook={handleBook}
                       />
