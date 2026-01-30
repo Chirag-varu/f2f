@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
-import { supabaseServer } from "@/lib/supabaseServer";
+import { readUsers, writeUsers } from "@/lib/userFileStore";
 import { isStrongPassword, isValidPhone } from "@/lib/validators";
+import crypto from "crypto";
 
 const OTP_SECRET = process.env.OTP_SECRET!;
-
 function normalizeIndianPhone(phone: string): string {
   if (phone.startsWith("+")) return phone;
   return `+91${phone}`;
@@ -45,15 +44,9 @@ export async function POST(req: Request) {
 
   let payload;
   try {
-    payload = jwt.verify(verificationToken, OTP_SECRET) as {
-      phone: string;
-      purpose: string;
-    };
+    payload = jwt.verify(verificationToken, OTP_SECRET) as { phone: string };
   } catch {
-    return NextResponse.json(
-      { error: "Phone number not verified" },
-      { status: 403 },
-    );
+    return NextResponse.json({ error: "Phone not verified" }, { status: 403 });
   }
 
   const normalizedPhone = normalizeIndianPhone(phone);
@@ -65,45 +58,31 @@ export async function POST(req: Request) {
     );
   }
 
-  const { data: existingUser } = await supabaseServer
-    .from("users")
-    .select("id")
-    .eq("phone_number", normalizedPhone)
-    .single();
+  const users = readUsers();
 
-  if (existingUser) {
+  if (users.some((u) => u.phone_number === normalizedPhone)) {
     return NextResponse.json(
       { error: "PHONE_ALREADY_EXISTS" },
       { status: 409 },
     );
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const newUser = {
+    id: crypto.randomUUID(),
+    full_name: fullName,
+    phone_number: normalizedPhone,
+    password,
+    role: "farmer" as const,
+    district,
+    state,
+    created_at: new Date().toISOString(),
+  };
 
-  const { data, error } = await supabaseServer
-    .from("users")
-    .insert({
-      full_name: fullName,
-      phone_number: normalizedPhone,
-      password: hashedPassword,
-      role: "farmer",
-      state,
-      district,
-    })
-    .select("id")
-    .single();
-
-  if (error || !data) {
-    console.log(error);
-    console.log(data);
-    return NextResponse.json(
-      { error: "Failed to create account" },
-      { status: 500 },
-    );
-  }
+  users.push(newUser);
+  writeUsers(users);
 
   return NextResponse.json({
     success: true,
-    farmerId: data.id,
+    farmerId: newUser.id,
   });
 }

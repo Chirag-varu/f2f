@@ -1,58 +1,30 @@
 import { NextResponse } from "next/server";
-import bcrypt from "bcryptjs";
-import { supabaseServer } from "@/lib/supabaseServer";
+import { readUsers } from "@/lib/userFileStore";
 import { isValidPhone } from "@/lib/validators";
-
-function normalizeIndianPhone(phone: string): string {
-  if (phone.startsWith("+")) return phone;
-  return `+91${phone}`;
-}
 
 export async function POST(req: Request) {
   const { phone, password } = await req.json();
 
-  if (!phone || !password) {
+  if (!phone || !password || !isValidPhone(phone)) {
     return NextResponse.json(
-      { error: "Phone number and password are required" },
+      { error: "Invalid phone number or password" },
       { status: 400 },
     );
   }
 
-  if (!isValidPhone(phone)) {
-    return NextResponse.json(
-      { error: "Invalid phone number" },
-      { status: 400 },
-    );
-  }
+  const users = readUsers();
 
-  const normalizedPhone = normalizeIndianPhone(phone);
+  const user = users.find(
+    (u) =>
+      u.phone_number === phone &&
+      u.password === password &&
+      u.role === "farmer",
+  );
 
-  const { data: user, error } = await supabaseServer
-    .from("users")
-    .select("id, password, role")
-    .eq("phone_number", normalizedPhone)
-    .single();
-
-  if (error || !user) {
+  if (!user) {
     return NextResponse.json(
       { error: "Invalid phone number or password" },
       { status: 401 },
-    );
-  }
-
-  const passwordMatch = await bcrypt.compare(password, user.password);
-
-  if (!passwordMatch) {
-    return NextResponse.json(
-      { error: "Invalid phone number or password" },
-      { status: 401 },
-    );
-  }
-
-  if (user.role !== "farmer") {
-    return NextResponse.json(
-      { error: "This account is not a farmer account" },
-      { status: 403 },
     );
   }
 
