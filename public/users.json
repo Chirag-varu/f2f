@@ -68,5 +68,15 @@
     "district": "Ahmedabad",
     "state": "Gujarat",
     "created_at": "2026-01-30T10:14:00Z"
+  },
+  {
+    "id": "cb913780-88b2-4d93-af7a-e4435f8a6434",
+    "full_name": "Anuj Yadav",
+    "phone_number": "+919879879871",
+    "password": "cherry123",
+    "role": "farmer",
+    "district": "Mumbai",
+    "state": "Maharashtra",
+    "created_at": "2026-01-30T10:30:49.607Z"
   }
 ]

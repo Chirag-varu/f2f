@@ -7,14 +7,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff } from "lucide-react";
 
-type User = {
-  id: string;
-  full_name: string;
-  phone_number: string;
-  password: string;
-  role: string;
-};
-
 export function FarmerLoginForm() {
   const [phone, setPhone] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -28,28 +20,17 @@ export function FarmerLoginForm() {
     setError("");
     setLoading(true);
 
-    fetch("/api/auth/login/farmer", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ phone, password }),
-    }).catch(() => {});
-
     try {
-      const res = await fetch("/users.json");
-      const users: User[] = await res.json();
+      const res = await fetch("/api/auth/login/farmer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone, password }),
+      });
 
-      const user = users.find(
-        (u) => u.phone_number === phone && u.role === "farmer",
-      );
+      const data = await res.json();
 
-      if (!user) {
-        setError("No farmer account found with this phone number");
-        setLoading(false);
-        return;
-      }
-
-      if (user.password !== password) {
-        setError("Invalid phone number or password");
+      if (!res.ok) {
+        setError(data.error);
         setLoading(false);
         return;
       }
@@ -57,8 +38,8 @@ export function FarmerLoginForm() {
       localStorage.setItem(
         "krishi_session",
         JSON.stringify({
-          farmerId: user.id,
-          role: user.role,
+          farmerId: data.farmerId,
+          role: data.role,
         }),
       );
 
