@@ -5,6 +5,11 @@ import { isValidPhone } from "@/lib/validators";
 
 const OTP_SECRET = process.env.OTP_SECRET!;
 
+function normalizeIndianPhone(phone: string): string {
+  if (phone.startsWith("+")) return phone;
+  return `+91${phone}`;
+}
+
 export async function POST(req: Request) {
   const { phone, otp } = await req.json();
 
@@ -12,7 +17,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid request" }, { status: 400 });
   }
 
-  const valid = verifyOtp(phone, otp);
+  const normalizedPhone = normalizeIndianPhone(phone);
+  const valid = verifyOtp(normalizedPhone, otp);
 
   if (!valid) {
     return NextResponse.json(
@@ -22,7 +28,7 @@ export async function POST(req: Request) {
   }
 
   const verificationToken = jwt.sign(
-    { phone, purpose: "phone_verification" },
+    { phone: normalizedPhone, purpose: "phone_verification" },
     OTP_SECRET,
     { expiresIn: "10m" },
   );
