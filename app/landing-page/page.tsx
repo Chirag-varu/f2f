@@ -2,9 +2,9 @@
 import Link from "next/link";
 export default function LandingPage() {
   return (
-    <main className="bg-gradient-to-b from-green-50 to-amber-50 min-h-screen font-sans">
+    <main className=" from-green-50 to-amber-50 min-h-screen font-sans">
       {/* Hero Section */}
-      <section className="px-4 pt-12 pb-16 md:pt-20 md:pb-24 flex flex-col items-center text-center bg-gradient-to-b from-green-100 to-amber-50">
+      <section className="px-4 pt-12 pb-16 md:pt-20 md:pb-24 flex flex-col items-center text-center from-green-100 to-amber-50">
         <h1 className="text-4xl md:text-6xl font-extrabold text-green-800 mb-4 leading-tight ">
           Turn Farm Waste Into Value
         </h1>
