@@ -72,6 +72,7 @@ const NavItem = ({ name, icon }: NavItemProps) => {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] flex font-sans text-slate-900">
+      
       {/* --- SIDEBAR --- */}
       <aside className="w-72 bg-[#0F172A] text-white flex flex-col sticky top-0 h-screen hidden lg:flex">
         <div className="p-8 mb-4">
@@ -80,6 +81,7 @@ const NavItem = ({ name, icon }: NavItemProps) => {
             <span className="text-xl font-black tracking-tighter uppercase">Farmer 2 Fuel</span>
           </div>
         </div>
+
         <nav className="flex-1 px-4 space-y-2">
           <NavItem name="Overview" icon="📊" />
           <NavItem name="Marketplace" icon="🛒" />
@@ -87,6 +89,7 @@ const NavItem = ({ name, icon }: NavItemProps) => {
           <NavItem name="Logistics" icon="🚚" />
           <NavItem name="Analytics" icon="📈" />
         </nav>
+
         <div className="p-6 border-t border-slate-800">
           <div className="bg-slate-800/50 p-4 rounded-2xl flex items-center gap-3 border border-slate-700">
             <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-700 font-bold">I</div>
@@ -97,6 +100,7 @@ const NavItem = ({ name, icon }: NavItemProps) => {
           </div>
         </div>
       </aside>
+
       {/* --- MAIN CONTENT --- */}
       <main className="flex-1 flex flex-col max-h-screen overflow-y-auto">
         <div className="p-10 space-y-8">

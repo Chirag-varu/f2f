@@ -44,13 +44,13 @@ export default function IndustryAuthPage() {
           if (profileError) throw profileError;
           
           alert("Account created and data saved!");
-          router.push('/industry/dashboard');
+          router.push('/dashboard/industry');
         }
       } else {
         // Sign In Logic
         const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
         if (signInError) throw signInError;
-        router.push('/industry/dashboard');
+        router.push('/dashboard/industry');
       }
     } catch (error: any) {
       alert(error.message || "An unexpected error occurred");
