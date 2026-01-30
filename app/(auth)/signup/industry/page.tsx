@@ -64,8 +64,7 @@ export default function IndustryAuthPage() {
       {/* Branding Side */}
       <div className="hidden lg:flex w-1/2 bg-emerald-900 p-12 flex-col justify-between relative overflow-hidden text-white">
         <div className="relative z-10">
-          <h2 className="text-5xl font-black leading-tight">Farmer 2 Fuel</h2>
-          <p className="mt-4 text-emerald-200 text-lg">Direct database storage enabled. No OTP required.</p>
+          <h2 className="text-5xl font-black leading-tight">Farm 2 Fuel</h2>
         </div>
         <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-emerald-800 rounded-full opacity-30"></div>
       </div>
