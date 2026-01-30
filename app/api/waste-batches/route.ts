@@ -1,6 +1,52 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { supabaseServer } from "@/lib/supabaseServer";
+import fs from 'fs';
+import path from 'path';
+import { NextApiRequest, NextApiResponse } from 'next';
+
+const DATA_PATH = path.join(process.cwd(), 'public', 'waste_batches.json');
+
+function readData() {
+  const data = fs.readFileSync(DATA_PATH, 'utf-8');
+  return JSON.parse(data);
+}
+
+function writeData(data: any) {
+  fs.writeFileSync(DATA_PATH, JSON.stringify(data, null, 2), 'utf-8');
+}
+
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'GET') {
+    // Get all waste batches
+    const data = readData();
+    res.status(200).json(data);
+  } else if (req.method === 'POST') {
+    // Add a new waste batch
+    const data = readData();
+    const newBatch = req.body;
+    data.push(newBatch);
+    writeData(data);
+    res.status(201).json(newBatch);
+  } else if (req.method === 'PUT') {
+    // Update a waste batch by id
+    const { id, ...update } = req.body;
+    let data = readData();
+    data = data.map((item: any) => (item.id === id ? { ...item, ...update } : item));
+    writeData(data);
+    res.status(200).json({ id, ...update });
+  } else if (req.method === 'DELETE') {
+    // Delete a waste batch by id
+    const { id } = req.body;
+    let data = readData();
+    data = data.filter((item: any) => item.id !== id);
+    writeData(data);
+    res.status(204).end();
+  } else {
+    res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE']);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
+  }
+}
 
 export async function POST(req: Request) {
   const supabase = supabaseServer;
