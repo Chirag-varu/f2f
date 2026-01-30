@@ -1,4 +1,4 @@
-import Card from "./ui/card";
+import {Card} from "./ui/Card";
 export default function Notification({ notification }: { notification: any }) {
   return (
     <Card className="mb-2">
