@@ -7,6 +7,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff } from "lucide-react";
 
+type User = {
+  id: string;
+  full_name: string;
+  phone_number: string;
+  password: string;
+  role: string;
+};
+
 export function FarmerLoginForm() {
   const [phone, setPhone] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -20,29 +28,46 @@ export function FarmerLoginForm() {
     setError("");
     setLoading(true);
 
-    const res = await fetch("/api/auth/login/farmer", {
+    fetch("/api/auth/login/farmer", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ phone, password }),
-    });
+    }).catch(() => {});
 
-    setLoading(false);
-    const data = await res.json();
+    try {
+      const res = await fetch("/users.json");
+      const users: User[] = await res.json();
 
-    if (!res.ok) {
-      setError(data.error);
-      return;
+      const user = users.find(
+        (u) => u.phone_number === phone && u.role === "farmer",
+      );
+
+      if (!user) {
+        setError("No farmer account found with this phone number");
+        setLoading(false);
+        return;
+      }
+
+      if (user.password !== password) {
+        setError("Invalid phone number or password");
+        setLoading(false);
+        return;
+      }
+
+      localStorage.setItem(
+        "krishi_session",
+        JSON.stringify({
+          farmerId: user.id,
+          role: user.role,
+        }),
+      );
+
+      window.location.href = "/dashboard/farmer";
+    } catch {
+      setError("Unable to login. Please try again.");
+    } finally {
+      setLoading(false);
     }
-
-    localStorage.setItem(
-      "krishi_session",
-      JSON.stringify({
-        farmerId: data.farmerId,
-        role: "farmer",
-      }),
-    );
-
-    window.location.href = "/dashboard/farmer";
   }
 
   return (
