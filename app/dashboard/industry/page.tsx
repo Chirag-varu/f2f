@@ -228,7 +228,6 @@ const NavItem = ({ name, icon }: NavItemProps) => {
                           location: farmerDistrict,
                           status: batch.status === 'Booked' ? 'Booked' : 'Available',
                           image_url: batch.image_url,
-                          farmer_name: farmerName,
                         }}
                         onBook={handleBook}
                       />
