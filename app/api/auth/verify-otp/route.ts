@@ -18,6 +18,7 @@ export async function POST(req: Request) {
   }
 
   const normalizedPhone = normalizeIndianPhone(phone);
+  console.log(normalizedPhone, otp)
   const valid = verifyOtp(normalizedPhone, otp);
 
   if (!valid) {

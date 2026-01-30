@@ -1,0 +1,58 @@
+[
+  {
+    "id": "TKT-8821",
+    "subject": "Delay in Wheat Straw delivery from Amritsar",
+    "category": "Supply",
+    "status": "Open",
+    "created_at": "2024-01-28T10:30:00Z"
+  },
+  {
+    "id": "TKT-8825",
+    "subject": "Incorrect tax calculation on Invoice #4412",
+    "category": "Billing",
+    "status": "Resolved",
+    "created_at": "2024-01-27T14:45:00Z"
+  },
+  {
+    "id": "TKT-8830",
+    "subject": "Unable to upload logistics manifest PDF",
+    "category": "Technical",
+    "status": "Open",
+    "created_at": "2024-01-29T09:15:00Z"
+  },
+  {
+    "id": "TKT-8834",
+    "subject": "New supplier verification request: Punjab Bio-Energy",
+    "category": "General",
+    "status": "Open",
+    "created_at": "2024-01-30T11:00:00Z"
+  },
+  {
+    "id": "TKT-8840",
+    "subject": "Missing weighbridge slip for REF-LOG-4415",
+    "category": "Supply",
+    "status": "Resolved",
+    "created_at": "2024-01-26T16:20:00Z"
+  },
+  {
+    "id": "TKT-8845",
+    "subject": "Payment gateway timeout during checkout",
+    "category": "Technical",
+    "status": "Open",
+    "created_at": "2024-01-30T15:00:00Z"
+  },
+  {
+    "id": "TKT-8852",
+    "subject": "Bulk discount inquiry for quarterly procurement",
+    "category": "Billing",
+    "status": "Resolved",
+    "created_at": "2024-01-25T12:00:00Z"
+  },
+  {
+    "id": "TKT-8860",
+    "subject": "Route optimization suggestion for Gujarat corridor",
+    "category": "General",
+    "status": "Open",
+    "created_at": "2024-01-29T17:45:00Z"
+  }
+]

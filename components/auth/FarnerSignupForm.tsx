@@ -36,6 +36,7 @@ export function FarmerSignupForm() {
     setOtpVerified(false);
     setVerificationToken("");
   }
+
   useEffect(() => {
     resetOtpFlow();
   }, [phone]);
@@ -52,9 +53,10 @@ export function FarmerSignupForm() {
 
     setLoading(false);
 
+    const data = await res.json();
+
     if (!res.ok) {
-      const data = await res.json();
-      setError(data.error);
+      setError(data.error || "Failed to send OTP");
       return;
     }
 
@@ -72,11 +74,10 @@ export function FarmerSignupForm() {
     });
 
     setLoading(false);
-
     const data = await res.json();
 
     if (!res.ok) {
-      setError(data.error);
+      setError(data.error || "OTP verification failed");
       return;
     }
 
@@ -107,12 +108,12 @@ export function FarmerSignupForm() {
 
     if (!res.ok) {
       if (data.error === "PHONE_ALREADY_EXISTS") {
-        resetOtpFlow();
         setError("Phone number already registered. Please login instead.");
+        resetOtpFlow();
         return;
       }
 
-      setError(data.error);
+      setError(data.error || "Failed to create account");
       return;
     }
 
@@ -124,7 +125,7 @@ export function FarmerSignupForm() {
       }),
     );
 
-    window.location.href = "/farmer/dashboard";
+    window.location.href = "/dashboard/farmer";
   }
 
   return (
@@ -145,7 +146,10 @@ export function FarmerSignupForm() {
               {error}
               {error.includes("login") && (
                 <span className="block mt-1">
-                  <a href="/login" className="underline text-krishi-brown">
+                  <a
+                    href="/login/farmer"
+                    className="underline text-krishi-brown"
+                  >
                     Go to Login
                   </a>
                 </span>
@@ -283,6 +287,7 @@ export function FarmerSignupForm() {
           >
             Create Account
           </Button>
+
           <p className="text-sm text-center text-muted-foreground">
             Already have an account?{" "}
             <a href="/login/farmer" className="underline text-krishi-brown">
