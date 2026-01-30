@@ -1,10 +1,15 @@
 import { NextResponse } from "next/server";
 import { createOtp } from "@/lib/otpStore";
 import { isValidPhone } from "@/lib/validators";
+import { supabaseServer } from "@/lib/supabaseServer";
+
+function normalizeIndianPhone(phone: string): string {
+  if (phone.startsWith("+")) return phone;
+  return `+91${phone}`;
+}
 
 export async function POST(req: Request) {
-  const body = await req.json();
-  const phone: string = body.phone;
+  const { phone } = await req.json();
 
   if (!phone || !isValidPhone(phone)) {
     return NextResponse.json(
@@ -13,9 +18,24 @@ export async function POST(req: Request) {
     );
   }
 
-  const otp = createOtp(phone);
+  const normalizedPhone = normalizeIndianPhone(phone);
 
-  console.log(`OTP for ${phone}: ${otp}`);
+  const { data: existingUser } = await supabaseServer
+    .from("users")
+    .select("id")
+    .eq("phone_number", normalizedPhone)
+    .single();
+
+  if (existingUser) {
+    return NextResponse.json(
+      { error: "Phone number already registered. Please login." },
+      { status: 409 },
+    );
+  }
+
+  const otp = createOtp(normalizedPhone);
+
+  console.log(`OTP for ${normalizedPhone}: ${otp}`);
 
   return NextResponse.json({
     success: true,

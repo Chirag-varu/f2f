@@ -1,4 +1,4 @@
-import Card from "./ui/Card";
+import {Card} from "./ui/Card";
 export default function OfferCard({ offer }: { offer: any }) {
   return (
     <Card className="mb-4">

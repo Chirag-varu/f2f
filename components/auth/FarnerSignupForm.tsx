@@ -283,6 +283,12 @@ export function FarmerSignupForm() {
           >
             Create Account
           </Button>
+          <p className="text-sm text-center text-muted-foreground">
+            Already have an account?{" "}
+            <a href="/login/farmer" className="underline text-krishi-brown">
+              Login here
+            </a>
+          </p>
         </form>
 
         <div className="relative hidden md:block">

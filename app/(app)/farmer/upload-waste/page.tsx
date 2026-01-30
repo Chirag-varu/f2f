@@ -20,6 +20,7 @@ export default function UploadWasteForm() {
     const id = localStorage.getItem("farmer_id");
     if (!id) toast.error("Farmer not logged in");
     setFarmerId(id);
+    console.log("Farmer ID:", id);
   }, []);
 
   useEffect(() => {
@@ -42,6 +43,9 @@ export default function UploadWasteForm() {
     e.preventDefault();
 
     if (!farmerId) return toast.error("Farmer not logged in");
+
+    console.log("Submitting...")
+
     if (!materialType || !quantity || !image)
       return toast.error("Please fill all fields and upload an image");
 

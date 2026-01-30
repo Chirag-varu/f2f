@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 import { supabaseServer } from "@/lib/supabaseServer";
 import { isStrongPassword, isValidPhone } from "@/lib/validators";
 
@@ -11,10 +12,8 @@ function normalizeIndianPhone(phone: string): string {
 }
 
 export async function POST(req: Request) {
-  const body = await req.json();
-
   const { fullName, phone, password, state, district, verificationToken } =
-    body;
+    await req.json();
 
   if (
     !fullName ||
@@ -57,75 +56,54 @@ export async function POST(req: Request) {
     );
   }
 
-  if (payload.phone !== phone || payload.purpose !== "phone_verification") {
+  const normalizedPhone = normalizeIndianPhone(phone);
+
+  if (payload.phone !== normalizedPhone) {
     return NextResponse.json(
       { error: "Phone verification mismatch" },
       { status: 403 },
     );
   }
 
-  const normalizedPhone = normalizeIndianPhone(phone);
+  const { data: existingUser } = await supabaseServer
+    .from("users")
+    .select("id")
+    .eq("phone_number", normalizedPhone)
+    .single();
 
-  const { data: authUser, error: authError } =
-    await supabaseServer.auth.admin.createUser({
-      phone: normalizedPhone,
-      password,
-      phone_confirm: true,
-    });
-
-  if (authError) {
-    if (
-      authError.code === "23505" ||
-      authError.message.toLowerCase().includes("already")
-    ) {
-      return NextResponse.json(
-        {
-          error: "PHONE_ALREADY_EXISTS",
-          message:
-            "This phone number is already registered. Please login or use a different number.",
-        },
-        { status: 409 },
-      );
-    }
-
-    console.error("Supabase auth error:", authError);
+  if (existingUser) {
     return NextResponse.json(
-      {
-        error: "AUTH_CREATION_FAILED",
-        message: "Unable to create account. Please try again later.",
-      },
-      { status: 500 },
+      { error: "PHONE_ALREADY_EXISTS" },
+      { status: 409 },
     );
   }
 
-  if (!authUser?.user) {
-    return NextResponse.json(
-      { error: "Auth user not returned" },
-      { status: 500 },
-    );
-  }
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-  const { error: profileError } = await supabaseServer.from("users").insert({
-    id: authUser.user.id,
-    full_name: fullName,
-    phone_number: normalizedPhone,
-    password,
-    role: "farmer",
-    state,
-    district,
-  });
+  const { data, error } = await supabaseServer
+    .from("users")
+    .insert({
+      full_name: fullName,
+      phone_number: normalizedPhone,
+      password: hashedPassword,
+      role: "farmer",
+      state,
+      district,
+    })
+    .select("id")
+    .single();
 
-  if (profileError) {
-    console.error("Profile insert error:", profileError);
+  if (error || !data) {
+    console.log(error);
+    console.log(data);
     return NextResponse.json(
-      { error: "Failed to create user profile" },
+      { error: "Failed to create account" },
       { status: 500 },
     );
   }
 
   return NextResponse.json({
     success: true,
-    message: "Farmer account created successfully",
-    farmerId: authUser.user.id,
+    farmerId: data.id,
   });
 }

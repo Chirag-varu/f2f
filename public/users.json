@@ -1,0 +1,72 @@
+[
+  {
+    "id": "53d67492-f823-4d9a-9ef3-a93339d51939",
+    "full_name": "Ramesh Kumar",
+    "password": "password123",
+    "phone_number": "9876543210",
+    "role": "farmer",
+    "district": "Ludhiana",
+    "state": "Punjab",
+    "created_at": "2026-01-30T10:00:00Z"
+  },
+  {
+    "id": "b1b6c4d0-6b4b-4f0d-b3bb-2c9d88c4c101",
+    "full_name": "Suresh Patel",
+    "password": "password123",
+    "phone_number": "9876500001",
+    "role": "farmer",
+    "district": "Anand",
+    "state": "Gujarat",
+    "created_at": "2026-01-30T10:02:00Z"
+  },
+  {
+    "id": "a92c1d7c-8e8d-4c7c-9b61-5fd4b8d8f201",
+    "full_name": "Mahesh Yadav",
+    "password": "password123",
+    "phone_number": "9876500002",
+    "role": "farmer",
+    "district": "Rewari",
+    "state": "Haryana",
+    "created_at": "2026-01-30T10:04:00Z"
+  },
+  {
+    "id": "c3d42f62-3d2a-4f7a-9bb3-3a9fd0c6a301",
+    "full_name": "Lakshmi Devi",
+    "password": "password123",
+    "phone_number": "9876500003",
+    "role": "farmer",
+    "district": "Guntur",
+    "state": "Andhra Pradesh",
+    "created_at": "2026-01-30T10:06:00Z"
+  },
+  {
+    "id": "f2b9d9b4-0c1a-4c0a-8a12-7a6c61dbe401",
+    "full_name": "Anil Sharma",
+    "password": "password123",
+    "phone_number": "9876501000",
+    "role": "hub_operator",
+    "district": "Panipat",
+    "state": "Haryana",
+    "created_at": "2026-01-30T10:10:00Z"
+  },
+  {
+    "id": "e19e6b5d-1c8b-4f5f-bf22-9b0c0e4f5502",
+    "full_name": "Vikram Singh",
+    "password": "password123",
+    "phone_number": "9876501001",
+    "role": "hub_operator",
+    "district": "Patiala",
+    "state": "Punjab",
+    "created_at": "2026-01-30T10:12:00Z"
+  },
+  {
+    "id": "d7b0c6fa-4b9a-4c88-9fd3-8f1a0c2f6603",
+    "full_name": "Neha Verma",
+    "password": "password123",
+    "phone_number": "9876501002",
+    "role": "hub_operator",
+    "district": "Ahmedabad",
+    "state": "Gujarat",
+    "created_at": "2026-01-30T10:14:00Z"
+  }
+]
