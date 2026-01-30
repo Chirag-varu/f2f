@@ -18,11 +18,22 @@ interface Shipment {
   color: string;
 }
 
+interface MaterialPricing {
+  [material: string]: {
+    pricing: {
+      [moistureKey: string]: {
+        price_per_kg: number;
+      };
+    };
+  };
+}
+
 export default function IndustryDashboardPage() {
   const [activeTab, setActiveTab] = useState<string>('overview');
   const [wasteBatches, setWasteBatches] = useState<any[]>([]);
   const [materials, setMaterials] = useState<any[]>([]);
   const [users, setUsers] = useState<any[]>([]);
+  const [materialPricing, setMaterialPricing] = useState<MaterialPricing>({});
 
   // Fetch waste batches from localStorage or JSON file
   const fetchWasteBatches = () => {
@@ -69,6 +80,15 @@ export default function IndustryDashboardPage() {
       fetch('/users.json')
         .then((res) => res.json())
         .then((data) => setUsers(data));
+    }
+  }, [activeTab]);
+
+  // Fetch material pricing
+  useEffect(() => {
+    if (activeTab === 'marketplace') {
+      fetch('/material_pricing.json')
+        .then((res) => res.json())
+        .then((data) => setMaterialPricing(data));
     }
   }, [activeTab]);
 
@@ -213,6 +233,15 @@ const NavItem = ({ name, icon }: NavItemProps) => {
                     const user = users.find((u) => u.id === batch.farmer_id);
                     const farmerName = user ? user.full_name : batch.farmer_id;
                     const farmerDistrict = user ? user.district : 'Unknown';
+                    // Calculate estimated price
+                    let price = null;
+                    if (materialPricing && materialPricing[materialName]) {
+                      const moistureKey = batch.moisture_percentage > 50 ? 'moisture_above_50' : 'moisture_0_50';
+                      const pricePerKg = materialPricing[materialName].pricing[moistureKey]?.price_per_kg;
+                      if (pricePerKg) {
+                        price = (pricePerKg * batch.quantity_kg).toFixed(2);
+                      }
+                    }
                     const handleBook = async () => {
                       setWasteBatches((prev) => prev.map((b) => b.id === batch.id ? { ...b, status: 'Booked' } : b));
                     };
@@ -228,6 +257,11 @@ const NavItem = ({ name, icon }: NavItemProps) => {
                           location: farmerDistrict,
                           status: batch.status === 'Booked' ? 'Booked' : 'Available',
                           image_url: batch.image_url,
+                          farmer_name: farmerName,
+                          moisture_percentage: batch.moisture_percentage,
+                          quality_grade: batch.quality_grade,
+                          created_at: batch.created_at,
+                          price,
                         }}
                         onBook={handleBook}
                       />
