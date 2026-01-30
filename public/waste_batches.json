@@ -8,7 +8,7 @@
     "moisture_percentage": 20,
     "quality_grade": null,
     "status": "available",
-    "image_url": "https://picsum.photos/seed/rice/600/400",
+    "image_url": "https://media.istockphoto.com/id/1206200429/photo/straw-in-the-rice-fields-closeup-of-photo.jpg?s=612x612&w=0&k=20&c=iQcIKig5BidT1fdboHOY7pPuB3W82EpOAElad8srJe4=",
     "created_at": "2026-01-30T13:00:00Z"
   },
   {
@@ -20,7 +20,7 @@
     "moisture_percentage": 22,
     "quality_grade": null,
     "status": "available",
-    "image_url": "https://picsum.photos/seed/sugarcane/600/400",
+    "image_url": "https://img.whatpackaging.co.in/whatpackaging/2e62eef9-dca0-42eb-8f74-1c3c2d628eef_banana%20waste.png?w=800&h=500&q=70&c=1",
     "created_at": "2026-01-30T13:05:00Z"
   },
   {
@@ -32,7 +32,7 @@
     "moisture_percentage": 18,
     "quality_grade": null,
     "status": "available",
-    "image_url": "https://picsum.photos/seed/cotton/600/400",
+    "image_url": "https://media.istockphoto.com/id/517540268/photo/sugarcane-bagasse.jpg?s=612x612&w=0&k=20&c=57k2CfxPW9mqRNhnTVVmguAjmfPpQRUtuUisHwbXGG0=",
     "created_at": "2026-01-30T13:10:00Z"
   },
   {
@@ -44,7 +44,7 @@
     "moisture_percentage": 25,
     "quality_grade": null,
     "status": "available",
-    "image_url": "https://picsum.photos/seed/banana/600/400",
+    "image_url": "https://www.shutterstock.com/image-photo/pile-rice-straw-after-harvested-600nw-2266233717.jpg",
     "created_at": "2026-01-30T13:15:00Z"
   }
 ]
