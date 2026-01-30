@@ -159,7 +159,6 @@ export default function IndustryDashboard() {
                 <input value={newRef} onChange={(e) => setNewRef(e.target.value)} placeholder="Ref ID" className="px-4 py-3 rounded-xl bg-slate-50 border-none text-sm" />
                 <input type="number" value={newAmount} onChange={(e) => setNewAmount(e.target.value)} placeholder="Amount ₹" className="px-4 py-3 rounded-xl bg-slate-50 border-none text-sm" />
                 <select value={newType} onChange={(e) => setNewType(e.target.value)} className="px-4 py-3 rounded-xl bg-slate-50 border-none text-sm">
-                  <option>Purchase</option><option>Logistics</option><option>Inventory</option>
                 </select>
                 <button type="submit" className="bg-emerald-600 text-white h-[48px] rounded-xl font-bold text-sm">Add Transaction</button>
               </form>
