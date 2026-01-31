@@ -5,6 +5,16 @@ Farm 2 Fuel is a platform that connects farmers and industries to enable the cir
 
 ---
 
+**About This Project**
+
+- Built using [Supabase](https://supabase.com) for authentication, database, and storage.
+- Developed as a hackathon project for TechVanza, where we advanced to the screening round.
+- Designed to be fully scalable and follows production-standard best practices for code, security, and deployment.
+
+---
+
+---
+
 ## Features
 
 - Farmer and Industry authentication and dashboards
@@ -76,15 +86,11 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 
 ---
 
-## Contributing
+## Contributer
 
-Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
-
----
-
-## License
-
-MIT
+[Diya Sing](https://github.com/ds312304)
+[Akshat Gohil](https://github.com/AkshatDev42)
+[Aditya Pai](https://github.com/adityapai05)
 
 ---
 
